@@ -46,6 +46,14 @@ class TestReducedVoxelData(unittest.TestCase):
         self.assertIsInstance(fourMatVoxelWriter.voxelModel, VirtualPopulation)
         fourMatVoxelWriter.voxelModel.name = 'Duke_4_Mat_Head_5mm'
         fourMatVoxelWriter.writeVoxelToFile()
+        fourVoxelReader = VirtualPopulationReader()
+        fourVoxelReader.loadInfo('Duke_4_Mat_Head_5mm.txt')
+        fourVoxelReader.loadData('Duke_4_Mat_Head_5mm.raw')
+        fourVoxel = fourVoxelReader.voxelModel
+        # Check if instance is Virtual Population object
+        self.assertIsInstance(fourVoxel, VirtualPopulation)
+        # Check if reduced voxel object has 5 materials (4 voxel + 'Free space')
+        self.assertEqual(5, fourVoxel.numMaterials)
 
 if __name__ == '__main__':
     unittest.main()
