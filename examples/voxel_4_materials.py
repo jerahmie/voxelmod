@@ -16,12 +16,7 @@ voxelMapFile = os.path.realpath(os.getcwd() + sep + 'material_map_4.txt' )
 fullMaterialInfoFile = os.path.realpath('/mnt/DATA/itis_Virtual_Family/Duke_Head_Fixed_Z/Duke_Head_34y_V5_2mm.txt' )
 fullMaterialDataFile = os.path.realpath('/mnt/DATA/itis_Virtual_Family/Duke_Head_Fixed_Z/Duke_Head_34y_V5_2mm.raw' )
 
-voxelReader = VirtualPopulationReader()
-voxelReader.loadInfo(fullMaterialInfoFile)
-voxelReader.loadData(fullMaterialDataFile)
-
-
-fourMatVoxelWriter = VirtualPopulationWriter()
-fourMatVoxelWriter.voxelModel = ReduceVoxel(voxelMapFile, voxelReader.voxelModel).voxelModel        
-fourMatVoxelWriter.voxelModel.name = 'test'
-fourMatVoxelWriter.writeVoxelToFile()
+fullVoxel = readVirtualPopulation(fullMaterialInfoFile, fullMaterialDataFile)
+fourVoxel = ReduceVoxel(voxelMapFile, fullVoxel).voxelModel        
+fourVoxel.name = 'Duke_4_materials_2mm'
+writeVirtualPopulation(fourVoxel)

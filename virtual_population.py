@@ -8,6 +8,12 @@ import sys, os, ntpath
 from os.path import sep
 import re
 
+# Regular expression patterns for reading virtual population voxel data.
+VOXEL_NAME_PROG = re.compile("([a-zA-Z0-9_.]*).txt$")
+MAT_PROG = re.compile("(^[0-9]+)\s([0|0.[0-9]*|1])\s([0|0.[0-9]*|1])\s([0|0.[0-9]*|1])\s([a-zA-Z0-9_/]*)")
+NXYZ_PROG = re.compile("^n([xyz])\s([0-9]*)")
+DXYZ_PROG = re.compile("^d([xyz])\s([0-9.]*)")
+
 class VirtualPopulation(object):
     """Holds Virtual Population """
     def __init__(self):
@@ -136,174 +142,132 @@ class VirtualPopulation(object):
         index = 0
         for mat in self._materials:
             mat[0] = index
-            index+=1
+            index += 1
 
+# Reader helper function
+def readVirtualPopulation(infoFile, dataFile):
+    """
+    Read Virtual Population info and data files and return a Virtual Population voxel object.
+    """
+    voxelModel = VirtualPopulation()
+    
+    # Load voxel metadata from .txt file.
+    if not os.path.isfile(infoFile):
+        raise Exception("File name: ", infoFile, " does not exist.")
 
-class VirtualPopulationReader(object):
-    """Class to populate Virtual Population voxel object with data from file."""
+    infoFilePath, infoFileTail = ntpath.split(infoFile)
+    m = re.match(VOXEL_NAME_PROG, infoFileTail)
+    voxelModel.name = m.group(1)
 
-    # Class variables regular expression patterns
-    _VOXEL_MODEL_NAME_RE = "([a-zA-Z0-9_.]*).txt$"
-    _MAT_RE_PATTERN = "(^[0-9]+)\s([0|0.[0-9]*|1])\s([0|0.[0-9]*|1])\s([0|0.[0-9]*|1])\s([a-zA-Z0-9_/]*)"
-    _NXYZ_RE_PATTERN = "^n([xyz])\s([0-9]*)"
-    _DXYZ_RE_PATTERN = "^d([xyz])\s([0-9.]*)"
+    try:
+        fileHandle = open(infoFile, 'r')
+        for line in fileHandle:
+            m_mat = re.match(MAT_PROG, line)
+            m_nxyz = re.match(NXYZ_PROG, line)
+            m_dxyz = re.match(DXYZ_PROG, line)
+            if m_mat:
+                voxelModel.appendMaterial(m_mat.group(5),
+                                          float(m_mat.group(2)),
+                                          float(m_mat.group(3)),
+                                          float(m_mat.group(4)))
+            elif m_nxyz:
+                if m_nxyz.group(1) == "x":
+                    voxelModel.nx = int(m_nxyz.group(2))
+                elif m_nxyz.group(1) == "y":
+                    voxelModel.ny = int(m_nxyz.group(2))
+                elif m_nxyz.group(1) == "z":
+                    voxelModel.nz = int(m_nxyz.group(2))
+                else:
+                    print(m_nxyz.group(1), m_nxyz.group(2))
+            elif m_dxyz:
+                if m_dxyz.group(1) == "x":
+                    voxelModel.dx = float(m_dxyz.group(2))
+                elif m_dxyz.group(1) == "y":
+                    voxelModel.dy = float(m_dxyz.group(2))
+                elif m_dxyz.group(1) == "z":
+                    voxelModel.dz = float(m_dxyz.group(2))
+                else:
+                    print(m_dxyz.group(1), m_dxyz.group(2))
+        fileHandle.close()
 
-    def __init__(self):
-        """
-        Initialize instance variables and compile regular expressions.
-        """
-        self._prog_mat = re.compile(self._MAT_RE_PATTERN)
-        self._prog_nxyz = re.compile(self._NXYZ_RE_PATTERN)
-        self._prog_dxyz = re.compile(self._DXYZ_RE_PATTERN)
-        self._voxelModel = VirtualPopulation()
+    except IOError as e:
+        print("I/O error({0}): {1}".format(e.errno, e.strerror))
+    except:
+        print("Unexpected error:", sys.exc_info()[0])
+        raise Exception("Unexpected Error.")    
 
-    @property
-    def voxelModel(self):
-        """Returns Virtual Population model instance."""
-        return self._voxelModel
+    # Load data file from .raw file
+    if not os.path.isfile(dataFile):
+        raise Exception("File name: ", dataFile, " does not exist.")
+    try:
+        fileHandle = open(dataFile, 'rb')
+        voxelModel.data = bytearray(fileHandle.read())
+        fileHandle.close()
+    except IOError as e:
+        print("I/O error({0}): {1}".format(e.errno, e.strerror))
+    except:
+        print("Unexpected error:", sys_exc_info()[0])
+        raise Exception("Unexpected Error.")
 
-    def loadData(self, fileName):
-        """Load raw voxel data from file."""
-        if not os.path.isfile(fileName):
-            raise Exception("File name: ", fileName, " does not exist.")
+    return voxelModel
+
+# Writer helper function
+def writeVirtualPopulation(vpVoxel, filePath=os.getcwd()):
+    """
+    Write Virtual Population info and data files from given Virtual Population voxel object.
+    """
+    if not os.path.isdir(filePath):
+        print("Directory (", filePath, ") not found.")
+        return -1
+    
+    if not vpVoxel:
+        print("Voxel object not valid.")
+        return -1
+    else:
+        fileNameInfo = os.path.realpath(filePath + sep + \
+                                        vpVoxel.name + '.txt')
+        fileNameData = os.path.realpath(filePath + sep + \
+                                        vpVoxel.name + '.raw')
+        # Write metadata file
         try:
-            fileHandle = open(fileName, 'rb')
-            self._voxelModel.data = bytearray(fileHandle.read())
+            fileHandle = open(fileNameInfo, 'w')
+            # write materials
+            for index in range(1,vpVoxel.numMaterials):
+                material = vpVoxel.material(index)
+                fileHandle.write(str(material[0]) + '\t' + \
+                                 "{0:.6f}".format(material[2]) + '\t' + \
+                                 "{0:.6f}".format(material[3]) + '\t' + \
+                                 "{0:.6f}".format(material[4]) + '\t' + \
+                                 material[1] + '\n')
+            # write grid extents
+            fileHandle.write('\nGrid extent (number of cells)\n')
+            fileHandle.write('nx\t' + str(vpVoxel.nx) + '\n')
+            fileHandle.write('ny\t' + str(vpVoxel.ny) + '\n')
+            fileHandle.write('nz\t' + str(vpVoxel.nz) + '\n')
+        
+            # write spatial steps (resolution)
+            fileHandle.write('\nSpatial steps [m]\n')
+            fileHandle.write('dx\t' + str(vpVoxel.dx) + '\n')
+            fileHandle.write('dy\t' + str(vpVoxel.dy) + '\n')
+            fileHandle.write('dz\t' + str(vpVoxel.dz) + '\n')
+            
             fileHandle.close()
         except IOError as e:
-            print("I/O error({0}): {1}".format(e.errno, e.strerror))
-        except:
-            print("Unexpected error:", sys_exc_info()[0])
-            raise Exception("Unexpected Error.")
-
-    def loadInfo(self, fileName):
-        """Load voxel metadata from .txt file."""
-        if not os.path.isfile(fileName):
-            raise Exception("File name: ", fileName, " does not exist.")
-
-        filePath, fileTail = ntpath.split(fileName)
-        m = re.match(self._VOXEL_MODEL_NAME_RE, fileTail)
-        self._voxelModel.name = m.group(1)
-
-        try:
-            fileHandle = open(fileName, 'r')
-            for line in fileHandle:
-                m_mat = re.match(self._prog_mat, line)
-                m_nxyz = re.match(self._prog_nxyz, line)
-                m_dxyz = re.match(self._prog_dxyz, line)
-                if m_mat:
-                    self._voxelModel.appendMaterial(m_mat.group(5),
-                                                    float(m_mat.group(2)),
-                                                    float(m_mat.group(3)),
-                                                    float(m_mat.group(4)))
-                elif m_nxyz:
-                    if m_nxyz.group(1) == "x":
-                        self._voxelModel.nx = int(m_nxyz.group(2))
-                    elif m_nxyz.group(1) == "y":
-                        self._voxelModel.ny = int(m_nxyz.group(2))
-                    elif m_nxyz.group(1) == "z":
-                        self._voxelModel.nz = int(m_nxyz.group(2))
-                    else:
-                        print(m_nxyz.group(1), m_nxyz.group(2))
-                elif m_dxyz:
-                    if m_dxyz.group(1) == "x":
-                        self._voxelModel.dx = float(m_dxyz.group(2))
-                    elif m_dxyz.group(1) == "y":
-                        self._voxelModel.dy = float(m_dxyz.group(2))
-                    elif m_dxyz.group(1) == "z":
-                        self._voxelModel.dz = float(m_dxyz.group(2))
-                    else:
-                        print(m_dxyz.group(1), m_dxyz.group(2))
-            fileHandle.close()
-
-        except IOError as e:
-            print("I/O error({0}): {1}".format(e.errno, e.strerror))
+            print("I/O Error({0}): {1}".format(e.errno, e.strerror))
         except:
             print("Unexpected error:", sys.exc_info()[0])
             raise Exception("Unexpected Error.")
 
-class VirtualPopulationWriter(object):
-    """Class to write Virtual Population data to file."""
-    def __init__(self):
-        self._fileNameInfo = ''
-        self._fileNameData = ''
-        self._filePath = os.getcwd()
-        self._voxelModel = None
+        # Write binary data file
 
-    @property
-    def voxelModel(self):
-        """Return the current Voxel Model."""
-        return self._voxelModel
+        try:
+            fileHandle = open(fileNameData, 'wb')
+            fileHandle.write(vpVoxel.data)
+            fileHandle.close()
+        except IOError as e:
+            print("I/O Error({0}): {1}".format(e.errno, e.strerror))
+        except:
+            print("Unexpected error:", sys.exc_info()[0])
+            raise Exception("Unexpected Error.")
 
-    @voxelModel.setter
-    def voxelModel(self, value):
-        """Set the current voxel model."""
-        self._voxelModel = value
-
-    @property
-    def filePath(self):
-        """Return the current path where voxel data is to be saved."""
-        return self._filePath
-
-    @filePath.setter
-    def filePath(self, value):
-        """Set the path where voxel data is to be saved."""
-        if os.path.isdir(value):
-            self._filePath = value
-        else:
-            print("Directory (", value, ") not found.")
-            return -1
-
-    def writeVoxelToFile(self):
-        """
-        Save Voxel object data to text file formatted using the itis Virtual
-        Family metadata format.
-        """
-        if not self._voxelModel:
-            print("Voxel object not defined.")
-        else:
-            self._fileNameInfo = os.path.realpath(self._filePath + sep + \
-                                                  self._voxelModel.name + '.txt')
-            self._fileNameData = os.path.realpath(self._filePath + sep + \
-                                                  self._voxelModel.name + '.raw')
-            # Write metadata file
-            try:
-                fileHandle = open(self._fileNameInfo, 'w')
-                # write materials
-                for index in range(1,self._voxelModel.numMaterials):
-                    material = self._voxelModel.material(index)
-                    fileHandle.write(str(material[0]) + '\t' + \
-                                     "{0:.6f}".format(material[2]) + '\t' + \
-                                     "{0:.6f}".format(material[3]) + '\t' + \
-                                     "{0:.6f}".format(material[4]) + '\t' + \
-                                     material[1] + '\n')
-                # write grid extents
-                fileHandle.write('\nGrid extent (number of cells)\n')
-                fileHandle.write('nx\t' + str(self._voxelModel.nx) + '\n')
-                fileHandle.write('ny\t' + str(self._voxelModel.ny) + '\n')
-                fileHandle.write('nz\t' + str(self._voxelModel.nz) + '\n')
-
-                # write spatial steps (resolution)
-                fileHandle.write('\nSpatial steps [m]\n')
-                fileHandle.write('dx\t' + str(self._voxelModel.dx) + '\n')
-                fileHandle.write('dy\t' + str(self._voxelModel.dy) + '\n')
-                fileHandle.write('dz\t' + str(self._voxelModel.dz) + '\n')
-
-                fileHandle.close()
-            except IOError as e:
-                print("I/O Error({0}): {1}".format(e.errno, e.strerror))
-            except:
-                print("Unexpected error:", sys.exc_info()[0])
-                raise Exception("Unexpected Error.")
-
-            # Write binary data file
-
-            try:
-                fileHandle = open(self._fileNameData, 'wb')
-                fileHandle.write(self._voxelModel.data)
-                fileHandle.close()
-            except IOError as e:
-                print("I/O Error({0}): {1}".format(e.errno, e.strerror))
-            except:
-                print("Unexpected error:", sys.exc_info()[0])
-                raise Exception("Unexpected Error.")
+    return 0

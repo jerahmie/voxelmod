@@ -28,11 +28,10 @@ class TestReducedVoxelData(unittest.TestCase):
         print('voxelMapFile: ', cls.voxelMapFile)
         print('dukeVoxelInfoFile: ', fullMaterialInfoFile)
         print('dukeVoxelDatafile: ', fullMaterialDataFile)
+
         
-        voxelReader = VirtualPopulationReader()
-        voxelReader.loadInfo(fullMaterialInfoFile)
-        voxelReader.loadData(fullMaterialDataFile)
-        cls.fullMaterialVoxel =  voxelReader.voxelModel
+        cls.fullMaterialVoxel =  readVirtualPopulation(fullMaterialInfoFile,
+                                                       fullMaterialDataFile)
 
     def testEnvironment(self):
         """Verify the test class is set up properly."""
@@ -41,19 +40,16 @@ class TestReducedVoxelData(unittest.TestCase):
 
     def testReduceVoxel(self):
         """Test the ReduceVoxel class."""
-        fourMatVoxelWriter = VirtualPopulationWriter()
-        fourMatVoxelWriter.voxelModel = ReduceVoxel(self.voxelMapFile, self.fullMaterialVoxel).voxelModel
-        self.assertIsInstance(fourMatVoxelWriter.voxelModel, VirtualPopulation)
-        fourMatVoxelWriter.voxelModel.name = 'Duke_4_Mat_Head_5mm'
-        fourMatVoxelWriter.writeVoxelToFile()
-        fourVoxelReader = VirtualPopulationReader()
-        fourVoxelReader.loadInfo('Duke_4_Mat_Head_5mm.txt')
-        fourVoxelReader.loadData('Duke_4_Mat_Head_5mm.raw')
-        fourVoxel = fourVoxelReader.voxelModel
+        fourMatVoxel = ReduceVoxel(self.voxelMapFile, self.fullMaterialVoxel).voxelModel
+        self.assertIsInstance(fourMatVoxel, VirtualPopulation)
+        fourMatVoxel.name = 'Duke_4_Mat_Head_5mm'
+        status = writeVirtualPopulation(fourMatVoxel)
+
+        fourVoxel = readVirtualPopulation('Duke_4_Mat_Head_5mm.txt', 'Duke_4_Mat_Head_5mm.txt')
         # Check if instance is Virtual Population object
         self.assertIsInstance(fourVoxel, VirtualPopulation)
         # Check if reduced voxel object has 5 materials (4 voxel + 'Free space')
         self.assertEqual(5, fourVoxel.numMaterials)
-
+        
 if __name__ == '__main__':
     unittest.main()
