@@ -200,9 +200,8 @@ def readVirtualPopulation(infoFile, dataFile):
     if not os.path.isfile(dataFile):
         raise Exception("File name: ", dataFile, " does not exist.")
     try:
-        fileHandle = open(dataFile, 'rb')
-        voxelModel.data = bytearray(fileHandle.read())
-        fileHandle.close()
+        with open(dataFile, 'rb') as fileHandle:
+            voxelModel.data = bytearray(fileHandle.read())
     except IOError as e:
         print("I/O error({0}): {1}".format(e.errno, e.strerror))
     except:
@@ -214,7 +213,8 @@ def readVirtualPopulation(infoFile, dataFile):
 # Writer helper function
 def writeVirtualPopulation(vpVoxel, filePath=os.getcwd()):
     """
-    Write Virtual Population info and data files from given Virtual Population voxel object.
+    Write Virtual Population info and data files from given Virtual Population
+    voxel object.
     """
     if not os.path.isdir(filePath):
         print("Directory (", filePath, ") not found.")

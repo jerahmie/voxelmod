@@ -55,7 +55,8 @@ class TestReducedVoxelData(unittest.TestCase):
 
     def testReadVirtualPopulationFromFile(self):
         """Test Virtual Population reader."""
-        testVoxel = readVirtualPopulation(self.voxelInfoFile, self.voxelDataFile)
+        testVoxel = readVirtualPopulation(self.voxelInfoFile,
+                                          self.voxelDataFile)
         self.assertIsInstance(testVoxel, VirtualPopulation)
         self.assertEqual(122, testVoxel.nx)
         self.assertEqual(62, testVoxel.ny)
@@ -70,7 +71,7 @@ class TestReducedVoxelData(unittest.TestCase):
                          testVoxel.material(30)[1])
         self.assertEqual('Adult_male_1_34y/Vertebrae',
                          testVoxel.material(77)[1])
-        self.assertEqual(testVoxel.nx * testVoxel.ny * testVoxel.nz, 
+        self.assertEqual(testVoxel.nx * testVoxel.ny * testVoxel.nz,
                          len(testVoxel.data))
 
     def testWriteVirtualPopulation(self):
@@ -92,4 +93,3 @@ class TestReducedVoxelData(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

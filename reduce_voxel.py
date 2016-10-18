@@ -5,7 +5,8 @@ Reduces the number of materials in a Virtual Population voxel model.
 from __future__ import(absolute_import, division, generators,
                        print_function, unicode_literals)
 
-import os, re
+import os
+import re
 from random import random
 from voxelmod.virtual_population import VirtualPopulation
 
@@ -34,8 +35,6 @@ class ReduceVoxel(object):
             for mapString in mapContent:
                 materialMatch = materialPattern.match(mapString)
                 if materialMatch:
-                    print(str(materialMatch.group(1)) + ' -> ' +
-                          str(materialMatch.group(2)) )
                     self._voxelMap[materialMatch.group(1)] = materialMatch.group(2)
 
         # Add reduced set of materials to reduced voxel object
@@ -65,7 +64,8 @@ class ReduceVoxel(object):
         reducedData = self._originalVoxelObject.data
         for index in range(len(reducedData)):
             if index == 10099596:
-                print(index, reducedData[index], ":", self._voxelMapByte[reducedData[index]])
+                print(index, reducedData[index], ":", 
+                      self._voxelMapByte[reducedData[index]])
             reducedData[index] = self._voxelMapByte[reducedData[index]]
             
         self._reducedVoxelObject.data = reducedData
