@@ -19,4 +19,5 @@ fullMaterialDataFile = os.path.realpath('/mnt/DATA/itis_Virtual_Family/Duke_Head
 fullVoxel = readVirtualPopulation(fullMaterialInfoFile, fullMaterialDataFile)
 fourVoxel = ReduceVoxel(voxelMapFile, fullVoxel).voxelModel        
 fourVoxel.name = 'Duke_3_materials_2mm'
-writeVirtualPopulation(fourVoxel, '/mnt/DATA/itis_Virtual_Family/reduced')
+#writeVirtualPopulation(fourVoxel, '/mnt/DATA/itis_Virtual_Family/reduced')
+writeVirtualPopulation(fourVoxel, '/home/jerahmie')

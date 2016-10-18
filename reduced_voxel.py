@@ -7,9 +7,9 @@ from __future__ import(absolute_import, division, generators,
 
 import os, re
 from random import random
-from virtual_population import *
+from voxelmod.virtual_population import VirtualPopulation
 
-materialPattern = re.compile('^([a-zA-Z_]*)[\s]*([a-zA-Z_]*)$')
+materialPattern = re.compile('^([a-zA-Z_]*)[\s]*([a-zA-Z_][a-zA-Z_\s]*)$')
 
 class ReduceVoxel(object):
     """ Voxel map for reduced set of biological materials."""
@@ -30,10 +30,12 @@ class ReduceVoxel(object):
             print("Found: ", self._voxelMapFile)
             with open(self._voxelMapFile,'r') as fh:
                 mapContent = fh.readlines()
-            fh.close()
+
             for mapString in mapContent:
                 materialMatch = materialPattern.match(mapString)
                 if materialMatch:
+                    print(str(materialMatch.group(1)) + ' -> ' +
+                          str(materialMatch.group(2)) )
                     self._voxelMap[materialMatch.group(1)] = materialMatch.group(2)
 
         # Add reduced set of materials to reduced voxel object

@@ -11,7 +11,8 @@ from os.path import pardir, sep
 import unittest
 sys.path.append(os.path.realpath(os.path.dirname(os.path.realpath(__file__)) +
                                  sep + pardir ))
-from virtual_population import *
+from voxelmod import *
+#from virtual_population import *
 from reduced_voxel import ReduceVoxel
 
 class TestReducedVoxelData(unittest.TestCase):
