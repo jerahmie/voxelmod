@@ -1,0 +1,321 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>voxelmod package &#8212; voxelmod 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="voxelmod 0.1 documentation" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="voxelmod-package">
+<h1>voxelmod package<a class="headerlink" href="#voxelmod-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-voxelmod.reduce_voxel">
+<span id="voxelmod-reduce-voxel-module"></span><h2>voxelmod.reduce_voxel module<a class="headerlink" href="#module-voxelmod.reduce_voxel" title="Permalink to this headline">¶</a></h2>
+<p>Reduces the number of materials in a Virtual Population voxel model.</p>
+<dl class="class">
+<dt id="voxelmod.reduce_voxel.ReduceVoxel">
+<em class="property">class </em><code class="descclassname">voxelmod.reduce_voxel.</code><code class="descname">ReduceVoxel</code><span class="sig-paren">(</span><em>voxelMapFile</em>, <em>voxelObject</em><span class="sig-paren">)</span><a class="headerlink" href="#voxelmod.reduce_voxel.ReduceVoxel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Voxel map for reduced set of biological materials.</p>
+<dl class="attribute">
+<dt id="voxelmod.reduce_voxel.ReduceVoxel.voxelModel">
+<code class="descname">voxelModel</code><a class="headerlink" href="#voxelmod.reduce_voxel.ReduceVoxel.voxelModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the reduced voxel model object.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="voxelmod.reduce_voxel.random">
+<code class="descclassname">voxelmod.reduce_voxel.</code><code class="descname">random</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; x in the interval [0, 1).<a class="headerlink" href="#voxelmod.reduce_voxel.random" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-voxelmod.virtual_population">
+<span id="voxelmod-virtual-population-module"></span><h2>voxelmod.virtual_population module<a class="headerlink" href="#module-voxelmod.virtual_population" title="Permalink to this headline">¶</a></h2>
+<p>A python class to represent Virtual Population voxel model info and data.</p>
+<dl class="class">
+<dt id="voxelmod.virtual_population.VirtualPopulation">
+<em class="property">class </em><code class="descclassname">voxelmod.virtual_population.</code><code class="descname">VirtualPopulation</code><a class="headerlink" href="#voxelmod.virtual_population.VirtualPopulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Holds Virtual Population</p>
+<dl class="method">
+<dt id="voxelmod.virtual_population.VirtualPopulation.appendMaterial">
+<code class="descname">appendMaterial</code><span class="sig-paren">(</span><em>materialName</em>, <em>RGB_Red</em>, <em>RGB_Green</em>, <em>RGB_Blue</em><span class="sig-paren">)</span><a class="headerlink" href="#voxelmod.virtual_population.VirtualPopulation.appendMaterial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a material to the end of the list with optional RGB color.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="voxelmod.virtual_population.VirtualPopulation.data">
+<code class="descname">data</code><a class="headerlink" href="#voxelmod.virtual_population.VirtualPopulation.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the Raw Voxel Data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="voxelmod.virtual_population.VirtualPopulation.dx">
+<code class="descname">dx</code><a class="headerlink" href="#voxelmod.virtual_population.VirtualPopulation.dx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns delta-x of voxel object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="voxelmod.virtual_population.VirtualPopulation.dy">
+<code class="descname">dy</code><a class="headerlink" href="#voxelmod.virtual_population.VirtualPopulation.dy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns delta-y of voxel object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="voxelmod.virtual_population.VirtualPopulation.dz">
+<code class="descname">dz</code><a class="headerlink" href="#voxelmod.virtual_population.VirtualPopulation.dz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns delta-z of voxel object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="voxelmod.virtual_population.VirtualPopulation.material">
+<code class="descname">material</code><span class="sig-paren">(</span><em>matNum</em><span class="sig-paren">)</span><a class="headerlink" href="#voxelmod.virtual_population.VirtualPopulation.material" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the material at specified location.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="voxelmod.virtual_population.VirtualPopulation.name">
+<code class="descname">name</code><a class="headerlink" href="#voxelmod.virtual_population.VirtualPopulation.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns name of Voxel Model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="voxelmod.virtual_population.VirtualPopulation.numMaterials">
+<code class="descname">numMaterials</code><a class="headerlink" href="#voxelmod.virtual_population.VirtualPopulation.numMaterials" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of materials in voxel object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="voxelmod.virtual_population.VirtualPopulation.nx">
+<code class="descname">nx</code><a class="headerlink" href="#voxelmod.virtual_population.VirtualPopulation.nx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns x-dimension of voxel object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="voxelmod.virtual_population.VirtualPopulation.ny">
+<code class="descname">ny</code><a class="headerlink" href="#voxelmod.virtual_population.VirtualPopulation.ny" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns y-dimension of voxel object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="voxelmod.virtual_population.VirtualPopulation.nz">
+<code class="descname">nz</code><a class="headerlink" href="#voxelmod.virtual_population.VirtualPopulation.nz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns z-dimension of voxel object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="voxelmod.virtual_population.VirtualPopulation.removeMaterial">
+<code class="descname">removeMaterial</code><span class="sig-paren">(</span><em>materialName</em><span class="sig-paren">)</span><a class="headerlink" href="#voxelmod.virtual_population.VirtualPopulation.removeMaterial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove material with given name.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="voxelmod.virtual_population.readVirtualPopulation">
+<code class="descclassname">voxelmod.virtual_population.</code><code class="descname">readVirtualPopulation</code><span class="sig-paren">(</span><em>infoFile</em>, <em>dataFile</em><span class="sig-paren">)</span><a class="headerlink" href="#voxelmod.virtual_population.readVirtualPopulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read Virtual Population info and data files and return a Virtual Population voxel object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="voxelmod.virtual_population.writeVirtualPopulation">
+<code class="descclassname">voxelmod.virtual_population.</code><code class="descname">writeVirtualPopulation</code><span class="sig-paren">(</span><em>vpVoxel</em>, <em>filePath='/Data/CMRR/voxelmod/docs'</em><span class="sig-paren">)</span><a class="headerlink" href="#voxelmod.virtual_population.writeVirtualPopulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write Virtual Population info and data files from given Virtual Population
+voxel object.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-voxelmod">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-voxelmod" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="voxelmod.VirtualPopulation">
+<em class="property">class </em><code class="descclassname">voxelmod.</code><code class="descname">VirtualPopulation</code><a class="headerlink" href="#voxelmod.VirtualPopulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Holds Virtual Population</p>
+<dl class="method">
+<dt id="voxelmod.VirtualPopulation.appendMaterial">
+<code class="descname">appendMaterial</code><span class="sig-paren">(</span><em>materialName</em>, <em>RGB_Red</em>, <em>RGB_Green</em>, <em>RGB_Blue</em><span class="sig-paren">)</span><a class="headerlink" href="#voxelmod.VirtualPopulation.appendMaterial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a material to the end of the list with optional RGB color.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="voxelmod.VirtualPopulation.data">
+<code class="descname">data</code><a class="headerlink" href="#voxelmod.VirtualPopulation.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the Raw Voxel Data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="voxelmod.VirtualPopulation.dx">
+<code class="descname">dx</code><a class="headerlink" href="#voxelmod.VirtualPopulation.dx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns delta-x of voxel object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="voxelmod.VirtualPopulation.dy">
+<code class="descname">dy</code><a class="headerlink" href="#voxelmod.VirtualPopulation.dy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns delta-y of voxel object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="voxelmod.VirtualPopulation.dz">
+<code class="descname">dz</code><a class="headerlink" href="#voxelmod.VirtualPopulation.dz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns delta-z of voxel object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="voxelmod.VirtualPopulation.material">
+<code class="descname">material</code><span class="sig-paren">(</span><em>matNum</em><span class="sig-paren">)</span><a class="headerlink" href="#voxelmod.VirtualPopulation.material" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the material at specified location.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="voxelmod.VirtualPopulation.name">
+<code class="descname">name</code><a class="headerlink" href="#voxelmod.VirtualPopulation.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns name of Voxel Model.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="voxelmod.VirtualPopulation.numMaterials">
+<code class="descname">numMaterials</code><a class="headerlink" href="#voxelmod.VirtualPopulation.numMaterials" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the number of materials in voxel object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="voxelmod.VirtualPopulation.nx">
+<code class="descname">nx</code><a class="headerlink" href="#voxelmod.VirtualPopulation.nx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns x-dimension of voxel object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="voxelmod.VirtualPopulation.ny">
+<code class="descname">ny</code><a class="headerlink" href="#voxelmod.VirtualPopulation.ny" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns y-dimension of voxel object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="voxelmod.VirtualPopulation.nz">
+<code class="descname">nz</code><a class="headerlink" href="#voxelmod.VirtualPopulation.nz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns z-dimension of voxel object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="voxelmod.VirtualPopulation.removeMaterial">
+<code class="descname">removeMaterial</code><span class="sig-paren">(</span><em>materialName</em><span class="sig-paren">)</span><a class="headerlink" href="#voxelmod.VirtualPopulation.removeMaterial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove material with given name.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="voxelmod.readVirtualPopulation">
+<code class="descclassname">voxelmod.</code><code class="descname">readVirtualPopulation</code><span class="sig-paren">(</span><em>infoFile</em>, <em>dataFile</em><span class="sig-paren">)</span><a class="headerlink" href="#voxelmod.readVirtualPopulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read Virtual Population info and data files and return a Virtual Population voxel object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="voxelmod.writeVirtualPopulation">
+<code class="descclassname">voxelmod.</code><code class="descname">writeVirtualPopulation</code><span class="sig-paren">(</span><em>vpVoxel</em>, <em>filePath='/Data/CMRR/voxelmod/docs'</em><span class="sig-paren">)</span><a class="headerlink" href="#voxelmod.writeVirtualPopulation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write Virtual Population info and data files from given Virtual Population
+voxel object.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">voxelmod package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-voxelmod.reduce_voxel">voxelmod.reduce_voxel module</a></li>
+<li><a class="reference internal" href="#module-voxelmod.virtual_population">voxelmod.virtual_population module</a></li>
+<li><a class="reference internal" href="#module-voxelmod">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/voxelmod.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Jerahmie Radder.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.8</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/voxelmod.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
