@@ -1,5 +1,10 @@
+#!/usr/bin/env python3
 """
-A python class to represent Virtual Population voxel model info and data.
+VirtualPopulation class defines a Virtual Population voxel biological 
+model object.
+
+A VirtualPopulation object is created from Virtual Population data (.raw)
+and description (.txt) files.  
 """
 
 from __future__ import (absolute_import, division,
@@ -213,8 +218,8 @@ def readVirtualPopulation(infoFile, dataFile):
 # Writer helper function
 def writeVirtualPopulation(vpVoxel, filePath=os.getcwd()):
     """
-    Write Virtual Population info and data files from given Virtual Population
-    voxel object.
+    Write Virtual Population info and data files from given Virtual 
+    Population voxel object.
     """
     if not os.path.isdir(filePath):
         print("Directory (", filePath, ") not found.")
