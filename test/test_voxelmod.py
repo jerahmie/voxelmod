@@ -12,8 +12,7 @@ from random import random
 import unittest
 sys.path.append(os.path.realpath(os.path.dirname(os.path.realpath(__file__)) +
                                  sep + pardir))
-from virtual_population import *
-
+from voxelmod.virtual_family import VirtualPopulation, readVirtualPopulation, writeVirtualPopulation
 
 class TestReducedVoxelData(unittest.TestCase):
     """Tests for Voxel Info and Data."""

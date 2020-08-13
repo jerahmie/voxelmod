@@ -20,7 +20,7 @@ import os
 import sys
 import re
 from random import random
-from voxelmod.virtual_population import VirtualPopulation
+from .virtual_population import VirtualPopulation
 
 MATERIAL_PATTERN = re.compile('^([a-zA-Z_]*)[\s]*([a-zA-Z_][a-zA-Z_\s]*)$')
 

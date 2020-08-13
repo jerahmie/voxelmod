@@ -12,8 +12,10 @@ from os.path import (pardir, sep)
 import unittest
 sys.path.append(os.path.realpath(os.path.dirname(os.path.realpath(__file__)) +
                                  sep + pardir ))
-from voxelmod import *
-from reduce_voxel import ReduceVoxel
+from voxelmod.virtual_family import(VirtualPopulation,
+                                    readVirtualPopulation,
+                                    writeVirtualPopulation,
+                                    ReduceVoxel)
 
 class TestReduceVoxelData(unittest.TestCase):
     """Tests for voxel material reductions."""
